@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { LugaresPage } from "../pages/lugares/lugares";
+import { SQLite } from '@ionic-native/sqlite';
+import { LugaresService } from '../providers/lugares-service/lugares-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,13 +19,18 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              public lugaresService: LugaresService,
+              public sqlite: SQLite) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'List', component: ListPage },
+      { title: 'Lugares', component: LugaresPage }
     ];
 
   }
@@ -32,7 +40,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.createDatabase();
     });
   }
 
@@ -41,4 +49,26 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+    private createDatabase(){
+      this.sqlite.echoTest();
+        this.sqlite.create({
+            name: 'taller2.db',
+            location: 'default' // the location field is required
+        })
+            .then((db) => {
+                this.lugaresService.setDatabase(db);
+                console.log(db);
+                this.lugaresService.createTable();
+                return this.lugaresService.initialSeed();
+            })
+            .then(() =>{
+                this.splashScreen.hide();
+            })
+            .catch(error =>{
+                console.error(error);
+            });
+    }
+
+
 }
