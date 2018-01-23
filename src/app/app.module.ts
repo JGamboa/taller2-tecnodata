@@ -11,7 +11,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {LugaresPage} from "../pages/lugares/lugares";
 import { SQLite } from '@ionic-native/sqlite';
 import { LugaresService } from '../providers/lugares-service/lugares-service';
-
+import { IonicStorageModule } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { LugaresService } from '../providers/lugares-service/lugares-service';
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -35,8 +37,10 @@ import { LugaresService } from '../providers/lugares-service/lugares-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-      SQLite,
-    LugaresService
+    SQLite,
+    LugaresService,
+    Geolocation
+
   ]
 })
 export class AppModule {}

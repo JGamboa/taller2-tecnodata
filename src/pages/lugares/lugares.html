@@ -20,7 +20,11 @@
 
 
 <ion-content>
-  <ion-list>
+    <button ion-button icon-only (click)="obtainLoc()">
+        <ion-icon name="Localizacion">Obtener Localización</ion-icon>
+    </button>
+
+    <ion-list>
     <ion-item *ngIf="lugares.length == 0">
       Empty
     </ion-item>
@@ -36,6 +40,6 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list>
+    </ion-list>
 </ion-content>
 

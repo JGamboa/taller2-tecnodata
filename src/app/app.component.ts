@@ -9,6 +9,7 @@ import { LugaresPage } from "../pages/lugares/lugares";
 import { SQLite } from '@ionic-native/sqlite';
 import { LugaresService } from '../providers/lugares-service/lugares-service';
 
+
 @Component({
   templateUrl: 'app.html'
 })

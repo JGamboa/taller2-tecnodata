@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
+import { Geolocation } from '@ionic-native/geolocation';
 
 /**
  * Generated class for the LugaresPage page.
@@ -16,13 +17,55 @@ import { LugaresService } from '../../providers/lugares-service/lugares-service'
 })
 export class LugaresPage {
 
+  coords: any;
   lugares: any[] = [];
 
   constructor(public alertCtrl: AlertController,
               public navCtrl: NavController,
               public navParams: NavParams,
-              public lugaresService: LugaresService) {
+              public lugaresService: LugaresService,
+              private geolocation: Geolocation,
+              private loadingCtrl: LoadingController,
+              ) {
   }
+
+    showAlert(title, mensaje) {
+        return new Promise((resolve, reject) => {
+
+            let alert = this.alertCtrl.create({
+                title: title,
+                subTitle: mensaje,
+                buttons: [{
+                    text: 'OK',
+                    handler: () => {
+                        alert.dismiss().then(() => {
+                            resolve(true);
+                        });
+                        return false;
+                    }
+                }]
+            });
+
+            alert.present();
+
+        });
+    }
+
+    obtainLoc(){
+        let loadingCtrl = this.loadingCtrl.create({ content: "Obteniendo coordenadas..."});
+        loadingCtrl.present();
+        var posOptions = {timeout: 10000, enableHighAccuracy: true};
+        this.geolocation
+            .getCurrentPosition(posOptions)
+            .then(
+                (position) =>
+                {
+                    this.coords = position.coords;
+                    loadingCtrl.dismiss();
+                }
+            );
+
+    }
 
     getAllPlaces(){
         this.lugaresService.getAll()
@@ -54,8 +97,8 @@ export class LugaresPage {
                 {
                     text: 'Crear',
                     handler: (data)=>{
-                        data.latitud = '1';
-                        data.longitud = '2';
+                        data.latitud = this.coords.latitude;
+                        data.longitud = this.coords.longitude;
                         this.lugaresService.create(data)
                             .then(response => {
                                 this.lugares.unshift( data );

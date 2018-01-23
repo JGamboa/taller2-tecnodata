@@ -24,12 +24,11 @@ export class LugaresService {
     initialSeed(){
         this.storage.get('database_filled').then(val => {
             if(val){
-
+                return true;
             }else{
                 let sql = 'INSERT INTO lugares(titulo, latitud, longitud) VALUES("Algarrobo", "1","2")';
                 this.storage.set('database_filled', true);
                 return this.db.executeSql(sql, []);
-
             }
         });
 
@@ -55,7 +54,7 @@ export class LugaresService {
 
     create(lugar: any){
         let sql = 'INSERT INTO lugares(titulo, latitud, longitud) VALUES(?,?,?)';
-        return this.db.executeSql(sql, [lugar.titulo, lugar.latitud, lugar.latitud, lugar.longitud]);
+        return this.db.executeSql(sql, [lugar.titulo, lugar.latitud, lugar.longitud]);
     }
 
     update(lugar: any){
