@@ -8,18 +8,21 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {LugaresPage} from "../pages/lugares/lugares";
+import { LugaresPage } from "../pages/lugares/lugares";
 import { SQLite } from '@ionic-native/sqlite';
 import { LugaresService } from '../providers/lugares-service/lugares-service';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LugaresCreatePage } from "../pages/lugares-create/lugares-create";
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    LugaresPage
+    LugaresPage,
+    LugaresCreatePage
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     HomePage,
     ListPage,
-    LugaresPage
+    LugaresPage,
+    LugaresCreatePage
   ],
   providers: [
     StatusBar,
@@ -39,7 +43,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SQLite,
     LugaresService,
-    Geolocation
+    Geolocation,
+    Camera
 
   ]
 })

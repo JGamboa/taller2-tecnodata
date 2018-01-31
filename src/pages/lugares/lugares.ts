@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LugaresCreatePage } from "../lugares-create/lugares-create";
 
 /**
  * Generated class for the LugaresPage page.
@@ -78,49 +79,16 @@ export class LugaresPage {
     }
 
     openAlertNewPlace(){
-        let alert = this.alertCtrl.create({
-            title: 'Crear lugar',
-            message: 'escribe el nombre del lugar',
-            inputs: [
-                {
-                    name: 'titulo',
-                    placeholder: 'Digitar nuevo Lugar.',
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    handler: () =>{
-                        console.log('cancelar');
-                    }
-                },
-                {
-                    text: 'Crear',
-                    handler: (data)=>{
-                        data.latitud = this.coords.latitude;
-                        data.longitud = this.coords.longitude;
-                        this.lugaresService.create(data)
-                            .then(response => {
-                                this.lugares.unshift( data );
-                                this.getAllPlaces();
-                            })
-                            .catch( error => {
-                                console.error( error );
-                            })
-                    }
-                }
-            ]
-        });
-        alert.present();
+        this.navCtrl.push(LugaresCreatePage);
     }
 
 
-    updatePlace(task, index){
-        task = Object.assign({}, task);
-        task.completed = !task.completed;
-        this.lugaresService.update(task)
+    updatePlace(lugar, index){
+        lugar = Object.assign({}, lugar);
+        lugar.completed = !lugar.completed;
+        this.lugaresService.update(lugar)
             .then( response => {
-                this.lugares[index] = task;
+                this.lugares[index] = lugar;
             })
             .catch( error => {
                 console.error( error );
@@ -128,8 +96,8 @@ export class LugaresPage {
     }
 
 
-    deletePlace(task: any, index){
-        this.lugaresService.delete(task)
+    deletePlace(lugar: any, index){
+        this.lugaresService.delete(lugar)
             .then(response => {
                 console.log( response );
                 this.lugares.splice(index, 1);

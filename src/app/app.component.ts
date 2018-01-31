@@ -52,7 +52,6 @@ export class MyApp {
   }
 
     private createDatabase(){
-      this.sqlite.echoTest();
         this.sqlite.create({
             name: 'taller2.db',
             location: 'default' // the location field is required
