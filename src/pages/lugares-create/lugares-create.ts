@@ -113,7 +113,6 @@ export class LugaresCreatePage {
     }
 
     saveForm() {
-        this.showAlert("value", this.lugares.photo);
         this.obtainLoc();
         this.lugares.latitud = this.coords.latitude;
         this.lugares.longitud = this.coords.longitude;

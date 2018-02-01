@@ -29,16 +29,24 @@
       Empty
     </ion-item>
     <ion-item-sliding *ngFor="let lugar of lugares; let i = index">
+
       <ion-item >
         <h2>{{ lugar.titulo }}</h2>
         <p>Latitud : {{ lugar.latitud }} - Longitud : {{ lugar.longitud }}</p>
       </ion-item>
+
+        <!-- with name set -->
+        <ion-item>
+            <img *ngIf="lugar.photo" [src]="lugar.photo" />
+        </ion-item>
+
       <ion-item-options side="right" icon-left>
         <button ion-button color="danger" (click)="deletePlace(lugar, i)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
       </ion-item-options>
+
     </ion-item-sliding>
     </ion-list>
 </ion-content>
