@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
-import { Geolocation } from '@ionic-native/geolocation';
 import { LugaresCreatePage } from "../lugares-create/lugares-create";
 
 /**
@@ -24,9 +23,7 @@ export class LugaresPage {
   constructor(public alertCtrl: AlertController,
               public navCtrl: NavController,
               public navParams: NavParams,
-              public lugaresService: LugaresService,
-              private geolocation: Geolocation,
-              private loadingCtrl: LoadingController,
+              public lugaresService: LugaresService
               ) {
   }
 
@@ -50,22 +47,6 @@ export class LugaresPage {
             alert.present();
 
         });
-    }
-
-    obtainLoc(){
-        let loadingCtrl = this.loadingCtrl.create({ content: "Obteniendo coordenadas..."});
-        loadingCtrl.present();
-        var posOptions = {timeout: 10000, enableHighAccuracy: true};
-        this.geolocation
-            .getCurrentPosition(posOptions)
-            .then(
-                (position) =>
-                {
-                    this.coords = position.coords;
-                    loadingCtrl.dismiss();
-                }
-            );
-
     }
 
     getAllPlaces(){

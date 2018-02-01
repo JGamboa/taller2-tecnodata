@@ -15,21 +15,25 @@
 
 <ion-content padding>
 
+    <form (ngSubmit)="saveForm()">
+        <!-- with name set -->
+        <ion-item>
+            <ion-label>Titulo</ion-label>
+            <ion-input type="text" [(ngModel)]="lugares.titulo" name="titulo"></ion-input>
+        </ion-item>
 
-  <!-- with name set -->
-  <ion-item>
-    <ion-label>Titulo</ion-label>
-    <ion-input type="text" [(ngModel)]="lugares.titulo" name="titulo"></ion-input>
-  </ion-item>
 
-  <!-- with name set -->
-  <ion-item>
-    <img [src]="image" *ngIf="lugares.photo" />
-  </ion-item>
+        <button ion-button icon-right (click)="tomarFotografia()">
+            Take Picture <ion-icon name="camera">Tomar fotografía</ion-icon>
+        </button>
 
-  <button ion-button icon-only (click)="tomarFotografia()">
-    <ion-icon name="tomarFotografia">Tomar fotografía</ion-icon>
-  </button>
+        <!-- with name set -->
+        <ion-item>
+            <img *ngIf="lugares.photo" [src]="lugares.photo" />
+        </ion-item>
+
+        <button ion-button type="submit">Submit</button>
+    </form>
 
 
 </ion-content>

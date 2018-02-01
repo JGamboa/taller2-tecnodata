@@ -53,8 +53,8 @@ export class LugaresService {
     }
 
     create(lugar: any){
-        let sql = 'INSERT INTO lugares(titulo, latitud, longitud) VALUES(?,?,?)';
-        return this.db.executeSql(sql, [lugar.titulo, lugar.latitud, lugar.longitud]);
+        let sql = 'INSERT INTO lugares(titulo, latitud, longitud, photo) VALUES(?,?,?,?)';
+        return this.db.executeSql(sql, [lugar.titulo, lugar.latitud, lugar.longitud, lugar.photo]);
     }
 
     update(lugar: any){

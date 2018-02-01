@@ -85,10 +85,10 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="The purpuose of the app is saving the geolocation of the person to assist in route" />
     </plugin>
-    <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-camera" spec="^4.0.2">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="the app need the camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="the app need the photolibrary" />
     </plugin>
+    <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
