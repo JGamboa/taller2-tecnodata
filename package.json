@@ -30,9 +30,11 @@
     "@ionic/storage": "2.1.3",
     "cordova-android": "7.0.0",
     "cordova-ios": "4.5.4",
+    "cordova-plugin-add-swift-support": "^1.7.1",
     "cordova-plugin-camera": "^4.0.2",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-ionic": "^2.0.4",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-whitelist": "^1.3.1",
@@ -63,6 +65,13 @@
       "cordova-plugin-camera": {
         "CAMERA_USAGE_DESCRIPTION": "the app need the camera",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": "the app need the photolibrary"
+      },
+      "cordova-plugin-ionic": {
+        "APP_ID": "16b817c0",
+        "CHANNEL_NAME": "Master",
+        "UPDATE_METHOD": "background",
+        "UPDATE_API": "https://api.ionicjs.com",
+        "MAX_STORE": "2"
       }
     },
     "platforms": [
