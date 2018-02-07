@@ -25,8 +25,8 @@ export class LoginPage {
     datos: any;
     token: any;
     account: { email: string, password: string } = {
-        email: 'joaquin.gamboaf@gmail.com',
-        password: 'misabel2'
+        email: '',
+        password: ''
     };
 
 
