@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, ToastController, AlertController} from 'ionic-angular';
 
-//import { HomePage } from '../home/home';
+import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
 
 /**
@@ -23,10 +23,12 @@ export class LoginPage {
     // If you're using the username field with or without email, make
     // sure to add it to the type
     datos: any;
+    token: any;
     account: { email: string, password: string } = {
         email: 'joaquin.gamboaf@gmail.com',
         password: 'misabel2'
     };
+
 
     // Our translated text strings
     private loginErrorString: string;
@@ -70,38 +72,44 @@ export class LoginPage {
         loadingCtrl.present();
 
         const promise = new Promise((resolve, reject)=>{
-            this.user.login(this.account).then(data =>{
-                this.datos = data;
-                console.log(this.datos);
+            this.user.login(this.account).then((data:any) =>{
+                resolve(data);
                 loadingCtrl.dismiss();
-            })
+
+            }).catch((res:any)=>{
+                loadingCtrl.dismiss();
+                let toast = this.toastCtrl.create({
+                    message: this.loginErrorString,
+                    duration: 3000,
+                    position: 'top'
+                });
+                toast.present(); 
+                //this.showAlert("ERROR", res.error.error);
+            });
+
 
         });
+
+
 
         promise.then((res)=>{
-            loadingCtrl.dismiss();
-            this.showAlert("PROMISE", res);
+            this.navCtrl.push(HomePage);
         });
 
-        promise.catch((err)=>{
-            loadingCtrl.dismiss();
-            this.showAlert("PROMISE", err);
-        });
+
+
+
+
 
         /*
         this.user.login(this.account).then((resp) => {
             console.log('aqui');
-            this.navCtrl.push(HomePage);
+
         }, (err) => {
             console.error('errr: ' +JSON.stringify(err));
             this.navCtrl.setRoot(LoginPage);
             // Unable to log in
-            let toast = this.toastCtrl.create({
-                message: this.loginErrorString,
-                duration: 3000,
-                position: 'top'
-            });
-            toast.present();
+
         });
 
         */

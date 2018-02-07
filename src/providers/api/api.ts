@@ -30,16 +30,38 @@ export class ApiProvider {
     }
 
     postRes(endpoint: string, body: any){
-        return new Promise(resolve => {
-            this.http.post(this.url + '/' + endpoint, body).subscribe(
-                data => {
+        let reqOpts;
+
+        if (!reqOpts) {
+            reqOpts = {
+                headers: new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/x-www-form-urlencoded'),
+                params: new HttpParams()
+            };
+        }
+
+        // Support easy query params for GET requests
+        if (body) {
+            reqOpts.params = new HttpParams();
+            for (let k in body) {
+                reqOpts.params = reqOpts.params.append(k, body[k]);
+            }
+        }
+
+
+        //return new Promise((resolve,reject) => {
+          return  this.http.post(this.url + '/' + endpoint, null, reqOpts
+            ).toPromise().then(res => res);
+             /*.subscribe(
+                (data:any) => {
+                    //console.log('error asdas: ' + JSON.stringify(data));
                     resolve(data);
-                    console.log(JSON.stringify(data));
                 },
-                err => {
-                    console.log(JSON.stringify(err));
-                });
-        });
+                (err:any) => {
+                    //console.log('error 123124: ' + JSON.stringify(err));
+                    reject(err);
+                });*/
+        //});
+
     }
 
     post(endpoint: string, body: any, reqOpts?: any) {
