@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
 import { LugaresCreatePage } from "../lugares-create/lugares-create";
 

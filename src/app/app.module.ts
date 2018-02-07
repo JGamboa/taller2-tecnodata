@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
+import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
@@ -15,6 +17,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LugaresCreatePage } from "../pages/lugares-create/lugares-create";
 import { Camera } from '@ionic-native/camera';
+import { UserProvider } from '../providers/user/user';
+import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
@@ -22,10 +26,12 @@ import { Camera } from '@ionic-native/camera';
     HomePage,
     ListPage,
     LugaresPage,
-    LugaresCreatePage
+    LugaresCreatePage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
   ],
@@ -35,7 +41,8 @@ import { Camera } from '@ionic-native/camera';
     HomePage,
     ListPage,
     LugaresPage,
-    LugaresCreatePage
+    LugaresCreatePage,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -44,7 +51,9 @@ import { Camera } from '@ionic-native/camera';
     SQLite,
     LugaresService,
     Geolocation,
-    Camera
+    Camera,
+    UserProvider,
+    ApiProvider
 
   ]
 })
