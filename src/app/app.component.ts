@@ -9,7 +9,7 @@ import { LoginPage } from "../pages/login/login";
 import { LugaresPage } from "../pages/lugares/lugares";
 import { SQLite } from '@ionic-native/sqlite';
 import { LugaresService } from '../providers/lugares-service/lugares-service';
-
+import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +25,8 @@ export class MyApp {
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
               public lugaresService: LugaresService,
-              public sqlite: SQLite) {
+              public sqlite: SQLite,
+              private storate: Storage) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -43,6 +44,14 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.createDatabase();
+      let logged = this.getLoggedIn();
+
+      if(logged){
+          this.nav.setRoot(HomePage);
+      }else{
+          this.nav.setRoot(LoginPage);
+      }
+
     });
   }
 
@@ -52,6 +61,15 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
+    private getLoggedIn(){
+        this.storate.get('token').then(val => {
+            if(val){
+                return true;
+            }else{
+                return false;
+            }
+        });
+    }
     private createDatabase(){
         this.sqlite.create({
             name: 'taller2.db',

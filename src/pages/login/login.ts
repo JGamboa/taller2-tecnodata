@@ -37,7 +37,8 @@ export class LoginPage {
                 public user: UserProvider,
                 public toastCtrl: ToastController,
                 private loadingCtrl: LoadingController,
-                private alertCtrl: AlertController
+                private alertCtrl: AlertController,
+                private storage: Storage
                 ) {
 
             this.loginErrorString = 'Error al iniciar sesión';
@@ -90,10 +91,9 @@ export class LoginPage {
 
         });
 
-
-
-        promise.then((res)=>{
-            this.navCtrl.push(HomePage);
+        promise.then((res:any)=>{
+            this.storage.set('token', res.token);
+            this.navCtrl.setRoot(HomePage);
         });
 
 
