@@ -26,7 +26,7 @@ export class MyApp {
               public splashScreen: SplashScreen,
               public lugaresService: LugaresService,
               public sqlite: SQLite,
-              private storate: Storage) {
+              private storage: Storage) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -62,7 +62,7 @@ export class MyApp {
   }
 
     private getLoggedIn(){
-        this.storate.get('token').then(val => {
+        this.storage.get('token').then(val => {
             if(val){
                 return true;
             }else{
@@ -89,5 +89,13 @@ export class MyApp {
             });
     }
 
+    logoutClicked() {
+        console.log("Logout");
+        this.storage.set('token', '');
+        //this.authService.logout();
+        //this.menuCtrl.close();
+        this.nav.setRoot(LoginPage);
+        //nav.setRoot(LoginPage);
+    }
 
 }
