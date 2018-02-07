@@ -83,7 +83,7 @@ export class LoginPage {
                     duration: 3000,
                     position: 'top'
                 });
-                toast.present(); 
+                toast.present();
                 //this.showAlert("ERROR", res.error.error);
             });
 

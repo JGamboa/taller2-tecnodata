@@ -1,4 +1,3 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { ApiProvider } from '../api/api';
@@ -28,8 +27,7 @@ export class UserProvider {
 
     _user: any;
 
-    constructor(public api: ApiProvider,
-                public http: HttpClient) { }
+    constructor(public api: ApiProvider) { }
 
     /**
      * Send a POST request to our login endpoint with the data
