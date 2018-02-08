@@ -20,6 +20,7 @@ import { Camera } from '@ionic-native/camera';
 import { UserProvider } from '../providers/user/user';
 import { ApiProvider } from '../providers/api/api';
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -53,8 +54,7 @@ import { ApiProvider } from '../providers/api/api';
     Geolocation,
     Camera,
     UserProvider,
-    ApiProvider
-
+    ApiProvider,
   ]
 })
 export class AppModule {}

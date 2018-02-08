@@ -3,6 +3,7 @@ import { IonicPage, LoadingController, NavController, ToastController, AlertCont
 
 import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the LoginPage page.
@@ -92,14 +93,10 @@ export class LoginPage {
         });
 
         promise.then((res:any)=>{
+            console.log(JSON.stringify(res));
             this.storage.set('token', res.token);
             this.navCtrl.setRoot(HomePage);
         });
-
-
-
-
-
 
         /*
         this.user.login(this.account).then((resp) => {

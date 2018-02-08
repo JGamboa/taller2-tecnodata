@@ -39,6 +39,26 @@ export class LugaresService {
         return this.db.executeSql(sql, []);
     }
 
+    setLogout(){
+        this.storage.set('token', '');
+    }
+
+    getToken(){
+        this.storage.get('token').then((val) =>{
+            return val;
+        });
+    }
+
+    getLoggedIn(){
+        this.storage.get('token').then(val => {
+            if(val != ''){
+                return true;
+            }else{
+                return false;
+            }
+        });
+    }
+
     getAll(){
         let sql = 'SELECT * FROM lugares';
         return this.db.executeSql(sql, [])
