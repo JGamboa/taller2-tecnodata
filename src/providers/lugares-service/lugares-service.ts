@@ -45,8 +45,13 @@ export class LugaresService {
 
     getToken(){
         this.storage.get('token').then((val) =>{
+            console.log(val);
             return val;
         });
+    }
+
+    setToken(){
+        this.storage.set('token', true);
     }
 
     getLoggedIn(){

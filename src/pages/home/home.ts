@@ -37,6 +37,7 @@ export class HomePage {
     }
 
   getToken(){
+    this.lugaresService.setToken();
     this.showAlert('token', this.lugaresService.getToken());
   }
 

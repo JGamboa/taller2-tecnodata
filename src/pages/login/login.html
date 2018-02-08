@@ -36,6 +36,15 @@
         <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label>Servidor</ion-label>
+        <ion-select [(ngModel)]="account.servidor" name="servidor">
+          <ion-option value="200.111.159.19:81">TECNODATA OUTSIDE</ion-option>
+          <ion-option value="192.168.0.41:81">TECNODATA INSIDE</ion-option>
+        </ion-select>
+      </ion-item>
+
+
       <div padding>
         <button ion-button color="primary" block>Login</button>
       </div>

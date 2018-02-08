@@ -25,9 +25,10 @@ export class LoginPage {
     // sure to add it to the type
     datos: any;
     token: any;
-    account: { email: string, password: string } = {
+    account: { email: string, password: string, servidor: string } = {
         email: '',
-        password: ''
+        password: '',
+        servidor: ''
     };
 
 
@@ -94,6 +95,9 @@ export class LoginPage {
 
         promise.then((res:any)=>{
             console.log(JSON.stringify(res));
+            this.storage.set('servidor', this.account.servidor);
+            this.showAlert('Servidor seleccionado', this.account.servidor);
+            this.showAlert('Servidor Storage', this.storage.get('servidor'));
             this.storage.set('token', res.token);
             this.navCtrl.setRoot(HomePage);
         });
