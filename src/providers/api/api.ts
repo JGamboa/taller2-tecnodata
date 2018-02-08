@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class ApiProvider {
-    url: string = 'http://192.168.137.38:8000/passport/public';
+    url: string = 'http://192.168.137.68:8000/passport/public';
 
     constructor(public http: HttpClient) {
     }
