@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { ApiProvider } from '../api/api';
+import { Storage } from '@ionic/storage';
 
 
 /**
@@ -27,14 +28,24 @@ export class UserProvider {
 
     _user: any;
 
-    constructor(public api: ApiProvider) { }
+    constructor(public api: ApiProvider, private storage: Storage) { }
 
     /**
      * Send a POST request to our login endpoint with the data
      * the user entered on the form.
      */
     login(accountInfo: any) {
-        return this.api.postRes('api/login',accountInfo);
+         this.api.postRes('api/login',accountInfo).subscribe(
+             (res) => {
+                 this.storage.set('token', res['success']['token']);
+                 this._loggedIn(res['success']['token']);
+                 return true;
+             },
+             (error) => {
+                 console.error('stringyf: '+ JSON.stringify(error));
+                 return false;
+             }
+         );
     }
 
 

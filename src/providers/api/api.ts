@@ -1,14 +1,21 @@
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
 @Injectable()
 export class ApiProvider {
-    url: string = 'http://192.168.137.68:8000/passport/public';
 
-    constructor(public http: HttpClient) {
+    url: string = '';
+
+    constructor(public http: HttpClient,
+                private storage: Storage) {
+
+        this.storage.get('servidor').then((data)=>{
+            this.url = 'http://' + data + '/passport/public';
+        });
     }
 
     get(endpoint: string, params?: any, reqOpts?: any) {
@@ -30,6 +37,7 @@ export class ApiProvider {
     }
 
     postRes(endpoint: string, body: any){
+
         let reqOpts;
 
         if (!reqOpts) {
@@ -47,21 +55,13 @@ export class ApiProvider {
             }
         }
 
-
         //return new Promise((resolve,reject) => {
-          return  this.http.post(this.url + '/' + endpoint, null, reqOpts
-            ).toPromise().then(res => res);
-             /*.subscribe(
-                (data:any) => {
-                    //console.log('error asdas: ' + JSON.stringify(data));
-                    resolve(data);
-                },
-                (err:any) => {
-                    //console.log('error 123124: ' + JSON.stringify(err));
-                    reject(err);
-                });*/
-        //});
-
+        //console.log('URL 1: ' + this.url);
+        ///console.log('URL FINAL : ' + this.url + '/' + endpoint);
+        //let serverPromise = this.storage.get('servidor');
+        console.log('SERVER: ' + this.url + '/' + endpoint);
+        //'email=joaquin.gamboaf@gmail.com&password=test12'
+        return this.http.post(this.url + '/' + endpoint, null, reqOpts);
     }
 
     post(endpoint: string, body: any, reqOpts?: any) {

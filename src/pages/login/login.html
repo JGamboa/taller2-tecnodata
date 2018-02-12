@@ -14,12 +14,12 @@
 
 
 <ion-content>
-  <form (submit)="doLogin()">
+  <form (submit)="login()">
     <ion-list>
 
       <ion-item>
         <ion-label fixed>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="userData.email" name="email"></ion-input>
       </ion-item>
 
       <!--
@@ -33,12 +33,12 @@
 
       <ion-item>
         <ion-label fixed>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="userData.password" name="password"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>Servidor</ion-label>
-        <ion-select [(ngModel)]="account.servidor" name="servidor">
+        <ion-select [(ngModel)]="userData.servidor" name="servidor">
           <ion-option value="200.111.159.19:81">TECNODATA OUTSIDE</ion-option>
           <ion-option value="192.168.0.41:81">TECNODATA INSIDE</ion-option>
         </ion-select>

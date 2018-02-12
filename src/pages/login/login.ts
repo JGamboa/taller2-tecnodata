@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, LoadingController, NavController, ToastController, AlertController} from 'ionic-angular';
+import { IonicPage, NavController, ToastController, AlertController} from 'ionic-angular';
 
-import { HomePage } from '../home/home';
+//import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
-import { Storage } from '@ionic/storage';
+import {HomePage} from "../home/home";
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,11 +24,13 @@ export class LoginPage {
     // The account fields for the login form.
     // If you're using the username field with or without email, make
     // sure to add it to the type
-    datos: any;
+
     token: any;
-    account: { email: string, password: string, servidor: string } = {
-        email: '',
-        password: '',
+
+    responseData : any;
+    userData: { email: string, password: string, servidor: string } = {
+        email: 'joaquin.gamboaf@gmail.com',
+        password: 'test12',
         servidor: ''
     };
 
@@ -38,10 +41,9 @@ export class LoginPage {
     constructor(public navCtrl: NavController,
                 public user: UserProvider,
                 public toastCtrl: ToastController,
-                private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController,
-                private storage: Storage
-                ) {
+                public authService : AuthServiceProvider,
+    ) {
 
             this.loginErrorString = 'Error al iniciar sesión';
     }
@@ -68,51 +70,73 @@ export class LoginPage {
         });
     }
 
+    presentToast(msg) {
+        let toast = this.toastCtrl.create({
+            message: msg,
+            duration: 2000
+        });
+        toast.present();
+    }
+
+    login(){
+        if(this.userData.email && this.userData.password){
+            this.authService.postData(this.userData, "login").then((result) =>{
+                this.responseData = result;
+                if(this.responseData.success){
+                    localStorage.setItem('userData', JSON.stringify(this.responseData.success) )
+                    this.navCtrl.push(HomePage);
+                }
+                else{
+                    this.presentToast("Please give valid username and password");
+                }
+
+
+
+            }, (err) => {
+                if(err.error){
+                    this.presentToast("Please give valid username and password");
+                }
+                //Connection failed message
+            });
+        }
+        else{
+            this.presentToast("Give username and password");
+        }
+
+    }
+
     // Attempt to login in through our User service
+    /*
     doLogin() {
+
+
+
 
         let loadingCtrl = this.loadingCtrl.create({content: "Please wait..."});
         loadingCtrl.present();
 
-        const promise = new Promise((resolve, reject)=>{
-            this.user.login(this.account).then((data:any) =>{
-                resolve(data);
-                loadingCtrl.dismiss();
+        localStorage.setItem('servidor', this.userData.servidor);
 
-            }).catch((res:any)=>{
-                loadingCtrl.dismiss();
-                let toast = this.toastCtrl.create({
-                    message: this.loginErrorString,
-                    duration: 3000,
-                    position: 'top'
-                });
-                toast.present();
-                //this.showAlert("ERROR", res.error.error);
+        this.user.login(this.userData);
+
+
+        loadingCtrl.dismiss();
+        if(this.user._user != ''){
+            let toast = this.toastCtrl.create({
+                message: this.loginErrorString,
+                duration: 3000,
+                position: 'top'
             });
+            toast.present();
+        }else{
+            this.navCtrl.push(HomePage);
+        }
 
+    }
+    */
 
-        });
-
-        promise.then((res:any)=>{
-            console.log(JSON.stringify(res));
-            this.storage.set('servidor', this.account.servidor);
-            this.showAlert('Servidor seleccionado', this.account.servidor);
-            this.showAlert('Servidor Storage', this.storage.get('servidor'));
-            this.storage.set('token', res.token);
-            this.navCtrl.setRoot(HomePage);
-        });
-
-        /*
-        this.user.login(this.account).then((resp) => {
-            console.log('aqui');
-
-        }, (err) => {
-            console.error('errr: ' +JSON.stringify(err));
-            this.navCtrl.setRoot(LoginPage);
-            // Unable to log in
-
-        });
-
-        */
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad Login Page');
+        console.log(localStorage.getItem('token'));
     }
 }

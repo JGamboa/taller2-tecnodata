@@ -23,6 +23,7 @@ export class LugaresService {
 
     initialSeed(){
         this.storage.get('database_filled').then(val => {
+            console.log('database_filled ' + val);
             if(val){
                 return true;
             }else{

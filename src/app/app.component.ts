@@ -5,10 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { LoginPage } from "../pages/login/login";
+import { WelcomePage } from '../pages/welcome/welcome';
 import { LugaresPage } from "../pages/lugares/lugares";
 import { SQLite } from '@ionic-native/sqlite';
 import { LugaresService } from '../providers/lugares-service/lugares-service';
+
 
 
 @Component({
@@ -17,7 +18,7 @@ import { LugaresService } from '../providers/lugares-service/lugares-service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = WelcomePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -61,16 +62,9 @@ export class MyApp {
                 this.lugaresService.setDatabase(db);
                 console.log(db);
                 this.lugaresService.createTable();
-                let logged = this.lugaresService.getLoggedIn();
-
-
-                if(logged){
-                    this.nav.setRoot(HomePage);
-                }else{
-                    this.nav.setRoot(LoginPage);
-                }
 
                 return this.lugaresService.initialSeed();
+
             })
             .then(() =>{
                 this.splashScreen.hide();
@@ -83,10 +77,6 @@ export class MyApp {
     logoutClicked() {
         console.log("Logout");
         this.lugaresService.setLogout();
-        //this.authService.logout();
-        //this.menuCtrl.close();
-        this.nav.setRoot(LoginPage)
-        //nav.setRoot(LoginPage);
     }
 
 }
