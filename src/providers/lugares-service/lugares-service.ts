@@ -36,7 +36,7 @@ export class LugaresService {
     }
 
     createTable(){
-        let sql = 'CREATE TABLE IF NOT EXISTS lugares(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, latitud TEXT, longitud, TEXT, photo TEXT)';
+        let sql = 'CREATE TABLE IF NOT EXISTS lugares(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, latitud TEXT, longitud, photo TEXT)';
         return this.db.executeSql(sql, []);
     }
 

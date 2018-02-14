@@ -29,8 +29,8 @@ export class LoginPage {
 
     responseData : any;
     userData: { email: string, password: string, servidor: string } = {
-        email: 'joaquin.gamboaf@gmail.com',
-        password: 'test12',
+        email: '',
+        password: '',
         servidor: ''
     };
 
@@ -83,8 +83,8 @@ export class LoginPage {
             this.authService.postData(this.userData, "login").then((result) =>{
                 this.responseData = result;
                 if(this.responseData.success){
-                    localStorage.setItem('userData', JSON.stringify(this.responseData.success) )
-                    this.navCtrl.push(HomePage);
+                    localStorage.setItem('userData', JSON.stringify(this.responseData.success) );
+                    this.navCtrl.setRoot(HomePage);
                 }
                 else{
                     this.presentToast("Please give valid username and password");
@@ -137,6 +137,5 @@ export class LoginPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad Login Page');
-        console.log(localStorage.getItem('token'));
     }
 }

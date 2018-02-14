@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from "@ionic-native/geolocation";
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
+import {LugaresPage} from "../lugares/lugares";
 
 /**
  * Generated class for the LugaresCreatePage page.
@@ -99,7 +100,7 @@ export class LugaresCreatePage {
     obtainLoc(){
         let loadingCtrl = this.loadingCtrl.create({ content: "Obteniendo coordenadas..."});
         loadingCtrl.present();
-        var posOptions = {timeout: 10000, enableHighAccuracy: true};
+        var posOptions = {timeout: 5000, enableHighAccuracy: true};
         this.geolocation
             .getCurrentPosition(posOptions)
             .then(
@@ -108,7 +109,11 @@ export class LugaresCreatePage {
                     this.coords = position.coords;
                     loadingCtrl.dismiss();
                 }
-            );
+            ).catch((error)=>{
+                loadingCtrl.dismiss();
+                this.displayErrorAlert(error);
+                console.log('Error getting location ', JSON.stringify(error));
+        });
 
     }
 
@@ -117,30 +122,9 @@ export class LugaresCreatePage {
         this.lugares.latitud = this.coords.latitude;
         this.lugares.longitud = this.coords.longitude;
         this.lugaresService.create(this.lugares);
+        this.navCtrl.setRoot(LugaresPage);
     }
 
-
-    showAlert(title, mensaje) {
-        return new Promise((resolve, reject) => {
-
-            let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: mensaje,
-                buttons: [{
-                    text: 'OK',
-                    handler: () => {
-                        alert.dismiss().then(() => {
-                            resolve(true);
-                        });
-                        return false;
-                    }
-                }]
-            });
-
-            alert.present();
-
-        });
-    }
 
 
 }

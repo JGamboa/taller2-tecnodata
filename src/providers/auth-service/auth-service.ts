@@ -12,10 +12,14 @@ import 'rxjs/add/operator/map';
 export class AuthServiceProvider {
 
     url: string = 'http://200.111.159.19:81/passport/public/api/';
+    userDetails : any;
 
   constructor(public http: HttpClient)
   {
-      console.log(localStorage.getItem('servidor'));
+
+      //console.log(localStorage.setItem('servidor','192.168.0.41'));
+      const data = JSON.parse(localStorage.getItem('userData'));
+      this.userDetails = data;
       /*
       this.storage.get('servidor').then((data)=>{
           console.log(data);
@@ -25,30 +29,41 @@ export class AuthServiceProvider {
   }
 
     postData(credentials, type) {
-
-
         let reqOpts;
 
-        if (!reqOpts) {
-            reqOpts = {
-                headers: new HttpHeaders().set('Accept', 'application/json')
-                    .set('Content-Type', 'application/x-www-form-urlencoded'),
-                    //.set('Access-Control-Allow-Origin', '*'),
-                params: new HttpParams()
-            };
-        }
 
-        // Support easy query params for GET requests
-        if (credentials) {
-            reqOpts.params = new HttpParams();
-            for (let k in credentials) {
-                reqOpts.params = reqOpts.params.append(k, credentials[k]);
+        console.log(type);
+        if(type != 'login' && type != 'register'){
+            if (!reqOpts) {
+                reqOpts = {
+                    headers: new HttpHeaders().set('Accept', 'application/json').set('Authorization', 'Bearer ' + this.userDetails.token),
+                };
+            }
+
+            reqOpts.headers.append('Authorization', 'Bearer ' + this.userDetails.token);
+
+        }else{
+            if (!reqOpts) {
+                reqOpts = {
+                    headers: new HttpHeaders().set('Accept', 'application/json')
+                        .set('Content-Type', 'application/x-www-form-urlencoded'),
+                    params: new HttpParams()
+                };
+            }
+
+            // Support easy query params for GET requests
+            if (credentials) {
+                reqOpts.params = new HttpParams();
+                for (let k in credentials) {
+                    reqOpts.params = reqOpts.params.append(k, credentials[k]);
+                }
             }
         }
 
+
         return new Promise((resolve, reject) => {
 
-            this.http.post(this.url + type, null, reqOpts)
+            this.http.post(this.url + type, credentials , reqOpts)
                 .subscribe(res => {
                     resolve(res);
                 }, (err) => {

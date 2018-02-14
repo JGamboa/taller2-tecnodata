@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
 import { LugaresCreatePage } from "../lugares-create/lugares-create";
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
  * Generated class for the LugaresPage page.
@@ -17,13 +18,15 @@ import { LugaresCreatePage } from "../lugares-create/lugares-create";
 })
 export class LugaresPage {
 
-  coords: any;
-  lugares: any[] = [];
+  responseData : any;
+  coords : any;
+  lugares : any[] = [];
 
   constructor(public alertCtrl: AlertController,
               public navCtrl: NavController,
               public navParams: NavParams,
-              public lugaresService: LugaresService
+              public lugaresService: LugaresService,
+              public authService : AuthServiceProvider,
               ) {
   }
 
@@ -47,6 +50,31 @@ export class LugaresPage {
             alert.present();
 
         });
+    }
+
+    verifyUser(){
+
+        this.authService.postData(null, "details").then((result) =>{
+            //console.log(JSON.stringify(result));
+            this.showAlert('datos', JSON.stringify(result));
+            /*if(this.responseData.success){
+                this.navCtrl.setRoot(HomePage);
+            }
+            else{
+                //this.presentToast("Please give valid username and password");
+            }*/
+
+
+
+        }, (err) => {
+            //console.log(JSON.stringify(err));
+            this.showAlert('errores', JSON.stringify(err));
+            if(err.error){
+                //this.presentToast("Please give valid username and password");
+            }
+            //Connection failed message
+        });
+
     }
 
     getAllPlaces(){
@@ -74,6 +102,30 @@ export class LugaresPage {
             .catch( error => {
                 console.error( error );
             })
+    }
+
+    sincronizar(lugar: any, index){
+      this.showAlert('lugar', JSON.stringify(lugar));
+        this.authService.postData(lugar, "lugares").then((result) =>{
+            //console.log(JSON.stringify(result));
+            this.showAlert('datos', JSON.stringify(result));
+            /*if(this.responseData.success){
+                this.navCtrl.setRoot(HomePage);
+            }
+            else{
+                //this.presentToast("Please give valid username and password");
+            }*/
+
+
+
+        }, (err) => {
+            //console.log(JSON.stringify(err));
+            this.showAlert('errores', JSON.stringify(err));
+            if(err.error){
+                //this.presentToast("Please give valid username and password");
+            }
+            //Connection failed message
+        });
     }
 
 

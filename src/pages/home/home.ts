@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, NavController, App} from 'ionic-angular';
 //import { LugaresService } from '../../providers/lugares-service/lugares-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import {WelcomePage} from "../welcome/welcome";
 
 @Component({
   selector: 'page-home',
@@ -65,6 +66,7 @@ export class HomePage {
     }
 
     backToWelcome(){
+        this.navCtrl.setRoot(WelcomePage);
         const root = this.app.getRootNav();
         root.popToRoot();
     }

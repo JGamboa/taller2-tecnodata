@@ -20,8 +20,8 @@
 
 
 <ion-content>
-    <button ion-button icon-only (click)="obtainLoc()">
-        <ion-icon name="Localizacion">Obtener Localización</ion-icon>
+    <button ion-button icon-only (click)="verifyUser()">
+        <ion-icon name="Localizacion">Verificar user</ion-icon>
     </button>
 
     <ion-list>
@@ -33,12 +33,15 @@
       <ion-item >
         <h2>{{ lugar.titulo }}</h2>
         <p>Latitud : {{ lugar.latitud }} - Longitud : {{ lugar.longitud }}</p>
+         <img *ngIf="lugar.photo" [src]="lugar.photo" />
       </ion-item>
 
-        <!-- with name set -->
-        <ion-item>
-            <img *ngIf="lugar.photo" [src]="lugar.photo" />
-        </ion-item>
+        <ion-item-options side="left" icon-right>
+            <button ion-button color="danger" (click)="sincronizar(lugar, i)">
+                <ion-icon name="wifi"></ion-icon>
+                Sincronizar
+            </button>
+        </ion-item-options>
 
       <ion-item-options side="right" icon-left>
         <button ion-button color="danger" (click)="deletePlace(lugar, i)">
