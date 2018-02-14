@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {AlertController, NavController, App} from 'ionic-angular';
-//import { LugaresService } from '../../providers/lugares-service/lugares-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import {WelcomePage} from "../welcome/welcome";
 
@@ -71,4 +70,29 @@ export class HomePage {
         root.popToRoot();
     }
 
+
+    verifyUser(){
+
+        this.authService.postData(null, "details").then((result) =>{
+            //console.log(JSON.stringify(result));
+            this.showAlert('datos', JSON.stringify(result));
+            /*if(this.responseData.success){
+                this.navCtrl.setRoot(HomePage);
+            }
+            else{
+                //this.presentToast("Please give valid username and password");
+            }*/
+
+
+
+        }, (err) => {
+            //console.log(JSON.stringify(err));
+            this.showAlert('errores', JSON.stringify(err));
+            if(err.error){
+                //this.presentToast("Please give valid username and password");
+            }
+            //Connection failed message
+        });
+
+    }
 }

@@ -11,43 +11,38 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthServiceProvider {
 
-    url: string = 'http://200.111.159.19:81/passport/public/api/';
+    url: string = 'http://192.168.0.41:81/passport/public/api/';
     userDetails : any;
 
   constructor(public http: HttpClient)
   {
 
-      //console.log(localStorage.setItem('servidor','192.168.0.41'));
       const data = JSON.parse(localStorage.getItem('userData'));
       this.userDetails = data;
-      /*
-      this.storage.get('servidor').then((data)=>{
-          console.log(data);
-          this.url = 'http://' + data + '/passport/public/api/';
-      });*/
     console.log('Hello AuthServiceProvider Provider');
   }
 
+    setUrl(){
+        this.url = 'http://' + localStorage.getItem('servidor') + '/passport/public/api/';
+    }
+
     postData(credentials, type) {
+        this.setUrl();
         let reqOpts;
 
-
-        console.log(type);
         if(type != 'login' && type != 'register'){
             if (!reqOpts) {
+                console.log('aqui');
                 reqOpts = {
-                    headers: new HttpHeaders().set('Accept', 'application/json').set('Authorization', 'Bearer ' + this.userDetails.token),
+                    headers: new HttpHeaders().set('Authorization', 'Bearer '+ this.userDetails.token)
                 };
             }
-
-            reqOpts.headers.append('Authorization', 'Bearer ' + this.userDetails.token);
 
         }else{
             if (!reqOpts) {
                 reqOpts = {
                     headers: new HttpHeaders().set('Accept', 'application/json')
-                        .set('Content-Type', 'application/x-www-form-urlencoded'),
-                    params: new HttpParams()
+                    .set('Content-Type', 'application/x-www-form-urlencoded'),
                 };
             }
 
@@ -60,10 +55,8 @@ export class AuthServiceProvider {
             }
         }
 
-
         return new Promise((resolve, reject) => {
-
-            this.http.post(this.url + type, credentials , reqOpts)
+            this.http.post(this.url + type, credentials, reqOpts)
                 .subscribe(res => {
                     resolve(res);
                 }, (err) => {

@@ -29,8 +29,8 @@ export class LoginPage {
 
     responseData : any;
     userData: { email: string, password: string, servidor: string } = {
-        email: '',
-        password: '',
+        email: 'joaquin.gamboaf@gmail.com',
+        password: 'test12',
         servidor: ''
     };
 
@@ -80,6 +80,7 @@ export class LoginPage {
 
     login(){
         if(this.userData.email && this.userData.password){
+            localStorage.setItem('servidor', this.userData.servidor);
             this.authService.postData(this.userData, "login").then((result) =>{
                 this.responseData = result;
                 if(this.responseData.success){
@@ -104,36 +105,6 @@ export class LoginPage {
         }
 
     }
-
-    // Attempt to login in through our User service
-    /*
-    doLogin() {
-
-
-
-
-        let loadingCtrl = this.loadingCtrl.create({content: "Please wait..."});
-        loadingCtrl.present();
-
-        localStorage.setItem('servidor', this.userData.servidor);
-
-        this.user.login(this.userData);
-
-
-        loadingCtrl.dismiss();
-        if(this.user._user != ''){
-            let toast = this.toastCtrl.create({
-                message: this.loginErrorString,
-                duration: 3000,
-                position: 'top'
-            });
-            toast.present();
-        }else{
-            this.navCtrl.push(HomePage);
-        }
-
-    }
-    */
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad Login Page');

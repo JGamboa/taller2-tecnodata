@@ -36,33 +36,12 @@ export class LugaresService {
     }
 
     createTable(){
-        let sql = 'CREATE TABLE IF NOT EXISTS lugares(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, latitud TEXT, longitud, photo TEXT)';
+        let sql = 'CREATE TABLE IF NOT EXISTS lugares(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, latitud TEXT, longitud TEXT, photo TEXT)';
         return this.db.executeSql(sql, []);
     }
 
     setLogout(){
         this.storage.set('token', '');
-    }
-
-    getToken(){
-        this.storage.get('token').then((val) =>{
-            console.log(val);
-            return val;
-        });
-    }
-
-    setToken(){
-        this.storage.set('token', true);
-    }
-
-    getLoggedIn(){
-        this.storage.get('token').then(val => {
-            if(val != ''){
-                return true;
-            }else{
-                return false;
-            }
-        });
     }
 
     getAll(){
