@@ -12,7 +12,7 @@ export class HomePage {
     userDetails : any;
     responseData: any;
 
-    userPostData = {"name":"","token":""};
+    userPostData = {"name":"","token":"", "servidor":""};
 
   constructor(public navCtrl: NavController,
               private alertCtrl: AlertController,
@@ -24,7 +24,7 @@ export class HomePage {
       const data = JSON.parse(localStorage.getItem('userData'));
       this.userDetails = data;
 
-      this.userPostData.name = this.userDetails.name;
+      this.userDetails.servidor = localStorage.getItem('servidor');
       this.userPostData.token = this.userDetails.token;
   }
 
@@ -72,7 +72,6 @@ export class HomePage {
 
 
     verifyUser(){
-
         this.authService.postData(null, "details").then((result) =>{
             //console.log(JSON.stringify(result));
             this.showAlert('datos', JSON.stringify(result));
@@ -83,7 +82,9 @@ export class HomePage {
                 //this.presentToast("Please give valid username and password");
             }*/
 
-
+            setTimeout(() => {
+                this.showAlert('Error', 'Sincronización fallida');
+            }, 10000);
 
         }, (err) => {
             //console.log(JSON.stringify(err));
@@ -91,6 +92,9 @@ export class HomePage {
             if(err.error){
                 //this.presentToast("Please give valid username and password");
             }
+            setTimeout(() => {
+                this.showAlert('Error', 'Sincronización fallida');
+            }, 10000);
             //Connection failed message
         });
 

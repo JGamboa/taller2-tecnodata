@@ -26,6 +26,7 @@ import { Camera } from '@ionic-native/camera';
 import { UserProvider } from '../providers/user/user';
 import { ApiProvider } from '../providers/api/api';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { CommonProvider } from '../providers/common/common';
 
 
 
@@ -62,8 +63,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
       UserProvider,
       ApiProvider,
       AuthServiceProvider,
+      CommonProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-
   ]
 })
 export class AppModule {}

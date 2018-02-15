@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { LugaresService } from '../../providers/lugares-service/lugares-service';
 import { LugaresCreatePage } from "../lugares-create/lugares-create";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CommonProvider } from '../../providers/common/common';
 
 /**
  * Generated class for the LugaresPage page.
@@ -27,6 +28,7 @@ export class LugaresPage {
               public navParams: NavParams,
               public lugaresService: LugaresService,
               public authService : AuthServiceProvider,
+              public common: CommonProvider,
               ) {
   }
 
@@ -80,25 +82,36 @@ export class LugaresPage {
     }
 
     sincronizar(lugar: any, index){
-      this.showAlert('lugar', JSON.stringify(lugar));
-        this.authService.postData(lugar, "lugares").then((result) =>{
-            //console.log(JSON.stringify(result));
-            this.showAlert('datos', JSON.stringify(result));
-            /*if(this.responseData.success){
-                this.navCtrl.setRoot(HomePage);
+        this.common.presentLoading();
+        this.authService.postData(lugar, "lugares").then(
+
+            result =>{
+            this.responseData = result;
+            if(this.responseData.success){
+                this.common.closeLoading();
+                this.navCtrl.setRoot(LugaresPage);
+
             }
             else{
+                console.log('No access');
                 //this.presentToast("Please give valid username and password");
-            }*/
+            }
+            /*
+            setTimeout(() => {
+                this.showAlert('Error', 'Sincronización fallida');
+            }, 10000);*/
 
-
-
-        }, (err) => {
+        }, err => {
             //console.log(JSON.stringify(err));
+            this.common.closeLoading();
             this.showAlert('errores', JSON.stringify(err));
             if(err.error){
                 //this.presentToast("Please give valid username and password");
             }
+
+            setTimeout(() => {
+                this.showAlert('Error TM', 'Sincronización fallida');
+            }, 10000);
             //Connection failed message
         });
     }

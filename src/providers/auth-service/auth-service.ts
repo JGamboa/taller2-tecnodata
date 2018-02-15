@@ -11,28 +11,21 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthServiceProvider {
 
-    url: string = 'http://192.168.0.41:81/passport/public/api/';
+    url: string = 'http://200.111.159.19:81/passport/public/api/';
     userDetails : any;
 
   constructor(public http: HttpClient)
   {
-
-      const data = JSON.parse(localStorage.getItem('userData'));
-      this.userDetails = data;
-    console.log('Hello AuthServiceProvider Provider');
+      console.log('Hello AuthServiceProvider Provider');
   }
 
-    setUrl(){
-        this.url = 'http://' + localStorage.getItem('servidor') + '/passport/public/api/';
-    }
-
     postData(credentials, type) {
-        this.setUrl();
         let reqOpts;
 
         if(type != 'login' && type != 'register'){
             if (!reqOpts) {
-                console.log('aqui');
+                const data = JSON.parse(localStorage.getItem('userData'));
+                this.userDetails = data;
                 reqOpts = {
                     headers: new HttpHeaders().set('Authorization', 'Bearer '+ this.userDetails.token)
                 };

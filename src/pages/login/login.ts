@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, AlertController} from 'ionic-angular';
+import {App, IonicPage, NavController, ToastController} from 'ionic-angular';
 
-//import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
 import {HomePage} from "../home/home";
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -41,33 +41,11 @@ export class LoginPage {
     constructor(public navCtrl: NavController,
                 public user: UserProvider,
                 public toastCtrl: ToastController,
-                private alertCtrl: AlertController,
                 public authService : AuthServiceProvider,
+                public app: App,
     ) {
 
             this.loginErrorString = 'Error al iniciar sesión';
-    }
-
-    showAlert(title, mensaje) {
-        return new Promise((resolve, reject) => {
-
-            let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: mensaje,
-                buttons: [{
-                    text: 'OK',
-                    handler: () => {
-                        alert.dismiss().then(() => {
-                            resolve(true);
-                        });
-                        return false;
-                    }
-                }]
-            });
-
-            alert.present();
-
-        });
     }
 
     presentToast(msg) {
@@ -80,12 +58,13 @@ export class LoginPage {
 
     login(){
         if(this.userData.email && this.userData.password){
+            this.presentToast(this.userData.servidor);
             localStorage.setItem('servidor', this.userData.servidor);
             this.authService.postData(this.userData, "login").then((result) =>{
                 this.responseData = result;
                 if(this.responseData.success){
                     localStorage.setItem('userData', JSON.stringify(this.responseData.success) );
-                    this.navCtrl.setRoot(HomePage);
+                    this.enterAPP();
                 }
                 else{
                     this.presentToast("Please give valid username and password");
@@ -108,5 +87,16 @@ export class LoginPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad Login Page');
+    }
+
+
+    enterAPP(){
+        setTimeout(() => this.goToHome(), 3000);
+    }
+
+    goToHome(){
+        this.navCtrl.setRoot(HomePage);
+        const root = this.app.getRootNav();
+        root.popToRoot();
     }
 }
