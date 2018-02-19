@@ -22,6 +22,8 @@ export class AuthServiceProvider {
     postData(credentials, type) {
         let reqOpts;
 
+        this.url = 'http://' + localStorage.getItem('servidor') + '/passport/public/api/';
+
         if(type != 'login' && type != 'register'){
             if (!reqOpts) {
                 const data = JSON.parse(localStorage.getItem('userData'));

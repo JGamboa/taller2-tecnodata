@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { MapaPage } from '../pages/mapa/mapa';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { LugaresPage } from "../pages/lugares/lugares";
 import { SQLite } from '@ionic-native/sqlite';
@@ -33,7 +34,8 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
-      { title: 'Lugares', component: LugaresPage }
+      { title: 'Lugares', component: LugaresPage },
+      { title: 'Mapa', component: MapaPage }
     ];
 
   }

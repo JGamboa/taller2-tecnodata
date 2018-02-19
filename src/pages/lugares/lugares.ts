@@ -108,10 +108,11 @@ export class LugaresPage {
             if(err.error){
                 //this.presentToast("Please give valid username and password");
             }
-
+            /*
             setTimeout(() => {
                 this.showAlert('Error TM', 'Sincronización fallida');
             }, 10000);
+            */
             //Connection failed message
         });
     }

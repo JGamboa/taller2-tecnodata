@@ -82,9 +82,9 @@ export class HomePage {
                 //this.presentToast("Please give valid username and password");
             }*/
 
-            setTimeout(() => {
+            /*setTimeout(() => {
                 this.showAlert('Error', 'Sincronización fallida');
-            }, 10000);
+            }, 10000);*/
 
         }, (err) => {
             //console.log(JSON.stringify(err));
@@ -92,9 +92,10 @@ export class HomePage {
             if(err.error){
                 //this.presentToast("Please give valid username and password");
             }
+            /*
             setTimeout(() => {
                 this.showAlert('Error', 'Sincronización fallida');
-            }, 10000);
+            }, 10000);*/
             //Connection failed message
         });
 

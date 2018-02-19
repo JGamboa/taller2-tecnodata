@@ -27,6 +27,8 @@ import { UserProvider } from '../providers/user/user';
 import { ApiProvider } from '../providers/api/api';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { CommonProvider } from '../providers/common/common';
+import { MapaPageModule } from "../pages/mapa/mapa.module";
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 
 
@@ -46,6 +48,7 @@ import { CommonProvider } from '../providers/common/common';
         LoginPageModule,
         SignupPageModule,
         WelcomePageModule,
+        MapaPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +67,8 @@ import { CommonProvider } from '../providers/common/common';
       ApiProvider,
       AuthServiceProvider,
       CommonProvider,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+      GoogleMaps,
+      {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {}
