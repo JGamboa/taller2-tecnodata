@@ -9,6 +9,7 @@ import {
 } from '@ionic-native/google-maps';
 import { Component } from "@angular/core/";
 import { IonicPage } from 'ionic-angular';
+import {LugaresService} from "../../providers/lugares-service/lugares-service";
 
 /**
  * Generated class for the MapaPage page.
@@ -24,13 +25,24 @@ import { IonicPage } from 'ionic-angular';
 })
 export class MapaPage {
   map: GoogleMap;
+  lugares : any[] = [];
 
-  constructor() {
+  constructor(public lugaresService: LugaresService) {
   }
 
   ionViewDidLoad() {
+      this.getAllPlaces();
       this.loadMap();
   }
+    getAllPlaces(){
+        this.lugaresService.getAll()
+            .then(places => {
+                this.lugares = places;
+            })
+            .catch( error => {
+                console.error( error );
+            });
+    }
 
     loadMap(){
 
@@ -65,12 +77,19 @@ export class MapaPage {
                 this.map.moveCamera({
                     target: response.latLng
                 });
-                this.map.addMarker({
-                    title: 'My Position',
-                    icon: 'blue',
-                    animation: 'DROP',
-                    position: response.latLng
-                });
+
+                for(let data of this.lugares){
+                    this.map.addMarker({
+                        title: data.titulo,
+                        icon: 'blue',
+                        animation: 'DROP',
+                        position: {
+                            lat: data.latitud,
+                            lng: data.longitud,
+                        }
+                    });
+                }
+
             })
             .catch(error =>{
                 console.log(error);
